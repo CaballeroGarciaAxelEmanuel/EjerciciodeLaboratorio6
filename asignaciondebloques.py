@@ -1,82 +1,102 @@
-#include <stdio.h>
+#1er ejemplo
+class Proceso:
+    def __init__(self, id_proceso, tamano):
+        self.id_proceso = id_proceso
+        self.tamano = tamano
 
-typedef struct {
-    int id;
-    int size;
-    int allocated_block;
-} Process;
+class BloqueMemoria:
+    def __init__(self, id_bloque, capacidad):
+        self.id_bloque = id_bloque
+        self.capacidad = capacidad
+        self.memoria_disponible = capacidad
+        self.procesos = []
 
-typedef struct {
-    int id;
-    int size;
-    int available;
-} MemoryBlock;
+    def asignar_proceso(self, proceso):
+        if proceso.tamano <= self.memoria_disponible:
+            self.procesos.append(proceso)
+            self.memoria_disponible -= proceso.tamano
+            return True
+        else:
+            return False
 
-void allocate(Process *process, MemoryBlock *blocks, int num_blocks) {
-    int i;
-    for (i = 0; i < num_blocks; i++) {
-        if (blocks[i].available >= process->size) {
-            process->allocated_block = blocks[i].id;
-            blocks[i].available -= process->size;
-            break;
-        }
-    }
-}
+def asignar_procesos(procesos, bloques):
+    for proceso in procesos:
+        for bloque in bloques:
+            if bloque.asignar_proceso(proceso):
+                break
 
-void print_allocation(Process *processes, int num_processes) {
-    int i;
-    printf("Proceso\tTamano\tBloque asignado\n");
-    for (i = 0; i < num_processes; i++) {
-        printf("%d\t%d\t", processes[i].id, processes[i].size);
-        if (processes[i].allocated_block == -1) {
-            printf("No asignado\n");
-        } else {
-            printf("%d\n", processes[i].allocated_block);
-        }
-    }
-}
+    print("Asignación de procesos a bloques:")
+    for bloque in bloques:
+        print(f"Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
 
-int main() {
-    // Definir los procesos y bloques de memoria
-    /*Process processes[] = {
-        {1, 212, -1},
-        {2, 417, -1},
-        {3, 112, -1},
-        {4, 426, -1}
-    };
+# Crear procesos y bloques de memoria
+procesos = [
+    Proceso(1, 212),
+    Proceso(2, 417),
+    Proceso(3, 112),
+    Proceso(4, 426)
+]
 
-    MemoryBlock blocks[] = {
-        {1, 100, 100},
-        {2, 500, 500},
-        {3, 200, 200},
-        {4, 300, 300},
-        {5, 600, 600}
-    };*/
+bloques = [
+    BloqueMemoria(1, 100),
+    BloqueMemoria(2, 500),
+    BloqueMemoria(3, 200),
+    BloqueMemoria(4, 300),
+    BloqueMemoria(5, 600)
+]
 
-    //Caso adicional de prueba
-     Process processes[] = {
-        {1, 300, -1},
-        {2, 150, -1},
-        {3, 200, -1},
-        {4, 500, -1}
-    };
+#Asignar procesos a bloques de memoria
+asignar_procesos(procesos, bloques)
 
-    MemoryBlock blocks[] = {
-        {1, 400, 400},
-        {2, 200, 200},
-        {3, 600, 600},
-        {4, 100, 100}
-    };
 
-    int num_processes = sizeof(processes) / sizeof(Process);
-    int num_blocks = sizeof(blocks) / sizeof(MemoryBlock);
 
-    int i;
-    for (i = 0; i < num_processes; i++) {
-        allocate(&processes[i], blocks, num_blocks);
-    }
+#2do ejemplo
+class Proceso:
+    def __init__(self, id_proceso, tamano):
+        self.id_proceso = id_proceso
+        self.tamano = tamano
 
-    print_allocation(processes, num_processes);
+class BloqueMemoria:
+    def __init__(self, id_bloque, capacidad):
+        self.id_bloque = id_bloque
+        self.capacidad = capacidad
+        self.memoria_disponible = capacidad
+        self.procesos = []
 
-    return 0;
-}
+    def asignar_proceso(self, proceso):
+        if proceso.tamano <= self.memoria_disponible:
+            self.procesos.append(proceso)
+            self.memoria_disponible -= proceso.tamano
+            return True
+        else:
+            return False
+
+def asignar_procesos(procesos, bloques):
+    for proceso in procesos:
+        bloques_disponibles = [bloque for bloque in bloques if bloque.memoria_disponible >= proceso.tamano]
+        if bloques_disponibles:
+            bloque_asignado = min(bloques_disponibles, key=lambda x: x.memoria_disponible)
+            bloque_asignado.asignar_proceso(proceso)
+
+    print("Asignación de procesos a bloques:")
+    for bloque in bloques:
+        print(f"Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
+
+# Crear procesos y bloques de memoria
+procesos = [
+    Proceso(1, 212),
+    Proceso(2, 417),
+    Proceso(3, 112),
+    Proceso(4, 426)
+]
+
+bloques = [
+    BloqueMemoria(1, 100),
+    BloqueMemoria(2, 500),
+    BloqueMemoria(3, 200),
+    BloqueMemoria(4, 300),
+    BloqueMemoria(5, 600)
+]
+
+# Asignar procesos a bloques de memoria
+asignar_procesos(procesos, bloques)
