@@ -27,7 +27,7 @@ def asignar_procesos(procesos, bloques):
 
     print("Asignación de procesos a bloques:")
     for bloque in bloques:
-        print(f"Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
+        print("Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
 
 # Crear procesos y bloques de memoria
 procesos = [
@@ -80,7 +80,7 @@ def asignar_procesos(procesos, bloques):
 
     print("Asignación de procesos a bloques:")
     for bloque in bloques:
-        print(f"Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
+        print("Bloque {bloque.id_bloque}: {len(bloque.procesos)} procesos asignados")
 
 # Crear procesos y bloques de memoria
 procesos = [
